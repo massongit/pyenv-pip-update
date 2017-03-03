@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#
+# Summary: One line, short description of a pip-update
+#
+# Usage: pyenv pip-update
+#
+# Update all libraries managed by pip
+
+# If a one of commands return error, this script exit immediately
+set -e
+
+# If pyenv run with debug mode, this script run with debug mode too
+if [ -n "${PYENV_DEBUG}" ]
+then
+    set -x
+fi
+
+if [ ${#} -eq 0 ]
+then # If no argument is given, update libraries using pip
+    for v in $(ls $(pyenv root)/versions)
+    do
+        echo -e "\e[1;32mUpdating library of '${v}'...\e[m"
+        PYENV_VERSION=${v}
+        pip freeze --local | grep -v "^\-e" | cut -d = -f 1 | xargs pip install -U pip
+    done
+else # If arguments are given, output the usage
+    pyenv help --usage pip-update >&2
+    exit 1
+fi
