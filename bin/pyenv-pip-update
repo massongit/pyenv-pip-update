@@ -20,7 +20,7 @@ then # If no argument is given, update libraries using pip
     for v in $(ls $(pyenv root)/versions)
     do
         echo -e "\e[1;32mUpdating library of '${v}'...\e[m"
-        PYENV_VERSION=${v}
+        export PYENV_VERSION=${v}
         pip freeze --local | grep -v "^\-e" | cut -d = -f 1 | xargs pip install -U pip
     done
 else # If arguments are given, output the usage
