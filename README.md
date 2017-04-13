@@ -1,6 +1,6 @@
 # pyenv-pip-update
 
-Update all libraries managed by pip.
+Update all libraries managed by pip ([pyenv](https://github.com/pyenv/pyenv) plugin).
 
 ## Installation
     git clone https://github.com/massongit/pyenv-pip-update $(pyenv root)/plugins/pyenv-pip-update
