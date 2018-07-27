@@ -3,7 +3,7 @@
 Update all libraries managed by pip in all versions ([pyenv](https://github.com/pyenv/pyenv) plugin).
 
 ## Version
-0.0.2
+0.0.3
 
 ## Installation
     git clone https://github.com/massongit/pyenv-pip-update $(pyenv root)/plugins/pyenv-pip-update
