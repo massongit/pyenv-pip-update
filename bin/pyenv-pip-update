@@ -21,11 +21,17 @@ then # If no argument is given, update libraries using pip
     do
         echo -e "\e[1;32mUpdating library of '${v}'...\e[m"
         export PYENV_VERSION=${v}
-        if pip >/dev/null 2>&1
+
+        if conda >/dev/null 2>&1
+        then
+            conda update --all
+        elif pip >/dev/null 2>&1
         then
             pip list --outdated | awk '{if ($1 != "Package" && $1 !~ /^-+$/) print $1}' | xargs pip install -U
         else
-            echo -e "\e[1;31mCommand not found: pip. Skip.\e[m"
+            echo -e "\e[1;31mCommand not found: conda\e[m"
+            echo -e "\e[1;31mCommand not found: pip\e[m"
+            echo -e "\e[1;31mSkip.\e[m"
         fi
     done
 else # If arguments are given, output the usage
