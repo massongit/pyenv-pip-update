@@ -1,6 +1,9 @@
 # pyenv-pip-update
-
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)  
 Update all libraries managed by pip in all versions ([pyenv](https://github.com/pyenv/pyenv) plugin).
+
+## Version
+0.0.2
 
 ## Installation
     git clone https://github.com/massongit/pyenv-pip-update $(pyenv root)/plugins/pyenv-pip-update
@@ -10,8 +13,3 @@ Update all libraries managed by pip in all versions ([pyenv](https://github.com/
 
 ## History
 See [HISTORY.md](HISTORY.md)
-
-## License
-Copyright (c) 2017 Masaya SUZUKI <<suzukimasaya428@gmail.com>>
-
-Released under the [MIT license](LICENSE.txt)
