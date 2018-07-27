@@ -15,4 +15,4 @@ Update all libraries managed by `pip` or `conda` in all versions ([pyenv](https:
 See [HISTORY.md](HISTORY.md)
 
 ## Note
-In the environments using `conda` (anaconda or miniconda), this plugin updates only `conda`.
+In the environments using `conda` (anaconda or miniconda), this plugin only updates all libraries managed by `conda`.
