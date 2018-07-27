@@ -23,7 +23,7 @@ then # If no argument is given, update libraries using pip
         export PYENV_VERSION=${v}
         if pip >/dev/null 2>&1
         then
-            pip freeze --local | grep -v "^\-e" | cut -d = -f 1 | xargs pip install -U pip
+            pip list --outdated | awk '{if ($1 != "Package" && $1 !~ /^-+$/) print $1}' | xargs pip install -U
         else
             echo -e "\e[1;31mCommand not found: pip. Skip.\e[m"
         fi
