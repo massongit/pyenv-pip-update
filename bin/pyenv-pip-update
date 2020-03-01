@@ -27,7 +27,7 @@ then # If no argument is given, update libraries using pip
             conda update --all
         elif pip >/dev/null 2>&1
         then
-            stale_packages="$(pip --no-python-version-warning list --format=freeze --outdated | awk -F '==' '{print $1}')"
+            stale_packages="$(pip --no-python-version-warning list --format=freeze --outdated | awk -F '==' '{printf "%s ", $1}')"
             if [ ! -z "${stale_packages}" ]
             then
                 pip install "${stale_packages}" --upgrade
