@@ -30,7 +30,12 @@ then # If no argument is given, update libraries using pip
             stale_packages="$(pip list --format=freeze --outdated 2> >(grep -iv '^deprecation:') | awk -F '==' '{printf "%s ", $1}')"
             if [ ! -z "${stale_packages}" ]
             then
-                pip install --upgrade $stale_packages
+                if [[ "$v" =~ ^system ]]; then
+                    echo -e "\e[1;31mSystem pip detected. Update manually and cautiously\e[m"
+                    echo -e "\e[1;34mUse: 'pip install --upgrade $stale_packages'\e[m"
+                else
+                    pip install --upgrade $stale_packages
+                fi
             fi
         else
             echo -e "\e[1;31mCommand not found: conda\e[m"
