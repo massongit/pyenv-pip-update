@@ -3,10 +3,11 @@ name: super-linter
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
   pull_request:
-    branches: [master]
-
+    branches:
+      - master
   workflow_dispatch:
 
 jobs:
@@ -16,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3.5.3
       - name: Super-Linter
-        uses: github/super-linter@v5.0.0
+        uses: github/super-linter/slim@v5.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LINTER_RULES_PATH: .
