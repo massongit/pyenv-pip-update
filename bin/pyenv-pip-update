@@ -17,7 +17,7 @@ fi
 
 if [ ${#} -eq 0 ]
 then # If no argument is given, update libraries using pip
-    for v in $(ls $(pyenv root)/versions)
+    for v in $(pyenv root)/versions
     do
         echo -e "\e[1;32mUpdating library of '${v}'...\e[m"
         export PYENV_VERSION=${v}
@@ -27,14 +27,14 @@ then # If no argument is given, update libraries using pip
             conda update --all
         elif pip >/dev/null 2>&1
         then
-            stale_packages="$(pip list --format=freeze --outdated | awk -F '==' '{printf "%s ", $1}')"
-            if [ ! -z "${stale_packages}" ]
+            mapfile -t stale_packages < <(pip list --format=freeze --outdated | awk -F '==' '{printf "%s ", $1}')
+            if [ -n "${stale_packages[*]}" ]
             then
                 if [[ "$v" =~ ^system ]]; then
                     echo -e "\e[1;31mSystem pip detected. Update manually and cautiously\e[m"
-                    echo -e "\e[1;34mUse: 'pip install --upgrade $stale_packages'\e[m"
+                    echo -e "\e[1;34mUse: 'pip install --upgrade ${stale_packages[*]}'\e[m"
                 else
-                    pip install --upgrade $stale_packages
+                    pip install --upgrade "${stale_packages[@]}"
                 fi
             fi
         else
