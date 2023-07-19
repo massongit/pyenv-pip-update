@@ -16,3 +16,8 @@ See [HISTORY.md](HISTORY.md)
 
 ## Note
 In the environments using `conda` (anaconda or miniconda), this plugin only updates all libraries managed by `conda`.
+
+## Development
+### Config
+You should install [pre-commit](https://pre-commit.com/).
+This will run Gitleaks to check if your commit contains credentials.
