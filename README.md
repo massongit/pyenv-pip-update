@@ -1,5 +1,5 @@
 # pyenv-pip-update
-[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)  
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE.txt)  
 Update all libraries managed by `pip` or `conda` in all environments ([pyenv](https://github.com/pyenv/pyenv) plugin).
 
 ## Version
