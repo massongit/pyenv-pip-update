@@ -17,8 +17,9 @@ fi
 
 if [ ${#} -eq 0 ]
 then # If no argument is given, update libraries using pip
-    for v in $(pyenv root)/versions
+    for v in "$(pyenv root)"/versions/*
     do
+        v=${v//$(pyenv root)\/versions\//}
         echo -e "\e[1;32mUpdating library of '${v}'...\e[m"
         export PYENV_VERSION=${v}
 
