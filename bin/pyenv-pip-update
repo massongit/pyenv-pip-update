@@ -27,7 +27,7 @@ then # If no argument is given, update libraries using pip
             conda update --all
         elif pip >/dev/null 2>&1
         then
-            stale_packages="$(pip list --format=freeze --outdated | awk -F '==' '{printf "%s ", $1}')"
+            stale_packages="$(pip --disable-pip-version-check list --outdated | awk 'NR>3 {print $1}')"
             if [ ! -z "${stale_packages}" ]
             then
                 if [[ "$v" =~ ^system ]]; then
