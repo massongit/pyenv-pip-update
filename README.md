@@ -19,5 +19,5 @@ In the environments using `conda` (anaconda or miniconda), this plugin only upda
 
 ## Development
 ### Config
-You should install pre-commit by the following instruction: https://pre-commit.com/
+You should install [pre-commit](https://pre-commit.com/).
 This will check if your commit contains credentials.
