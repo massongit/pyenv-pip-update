@@ -25,6 +25,8 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@v3.7.0
+        if: github.event_name != 'pull_request' || github.event.action != 'closed'
       - uses: dev-hato/actions-update-gitleaks@v0.0.48
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
