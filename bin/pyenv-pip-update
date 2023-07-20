@@ -15,36 +15,41 @@ then
     set -x
 fi
 
-if [ ${#} -eq 0 ]
-then # If no argument is given, update libraries using pip
-    for v in "$(pyenv root)"/versions/*
-    do
-        v=${v//$(pyenv root)\/versions\//}
-        echo -e "\e[1;32mUpdating library of '${v}'...\e[m"
-        export PYENV_VERSION=${v}
-
-        if conda >/dev/null 2>&1
-        then
-            conda update --all
-        elif pip >/dev/null 2>&1
-        then
-            mapfile -t stale_packages < <(pip list --format=freeze --outdated | awk -F '==' '{printf "%s ", $1}')
-            if [ -n "${stale_packages[*]}" ]
-            then
-                if [[ "$v" =~ ^system ]]; then
-                    echo -e "\e[1;31mSystem pip detected. Update manually and cautiously\e[m"
-                    echo -e "\e[1;34mUse: 'pip install --upgrade ${stale_packages[*]}'\e[m"
-                else
-                    pip install --upgrade "${stale_packages[@]}"
-                fi
-            fi
-        else
-            echo -e "\e[1;31mCommand not found: conda\e[m"
-            echo -e "\e[1;31mCommand not found: pip\e[m"
-            echo -e "\e[1;31mSkip.\e[m"
-        fi
-    done
-else # If arguments are given, output the usage
+# If arguments are given, output the usage
+if [ ${#} -ne 0 ]
+then
     pyenv help --usage pip-update >&2
     exit 1
 fi
+
+# If no argument is given, update libraries using pip
+for v in "$(pyenv root)"/versions/*
+do
+    v=${v//$(pyenv root)\/versions\//}
+    echo -e "\e[1;32mUpdating library of '${v}'...\e[m"
+    export PYENV_VERSION=${v}
+
+    if conda >/dev/null 2>&1
+    then
+        conda update --all
+    elif pip >/dev/null 2>&1
+    then
+        mapfile -t stale_packages < <(pip list --format=freeze --outdated | awk -F '==' '{printf "%s ", $1}')
+
+        if [ -z "${stale_packages[*]}" ]
+        then
+            continue
+        fi
+
+        if [[ "$v" =~ ^system ]]; then
+            echo -e "\e[1;31mSystem pip detected. Update manually and cautiously\e[m"
+            echo -e "\e[1;34mUse: 'pip install --upgrade ${stale_packages[*]}'\e[m"
+        else
+            pip install --upgrade "${stale_packages[@]}"
+        fi
+    else
+        echo -e "\e[1;31mCommand not found: conda\e[m"
+        echo -e "\e[1;31mCommand not found: pip\e[m"
+        echo -e "\e[1;31mSkip.\e[m"
+    fi
+done
