@@ -34,8 +34,7 @@ do
         conda update --all
     elif pip >/dev/null 2>&1
     then
-        mapfile -t stale_packages < <(pip list --format=freeze --outdated | awk -F '==' '{printf "%s ", $1}')
-
+        mapfile -t stale_packages < <(pip --disable-pip-version-check list --outdated | awk 'NR>2 {printf "%s ", $1}')
         if [ -z "${stale_packages[*]}" ]
         then
             continue
