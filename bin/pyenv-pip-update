@@ -44,7 +44,7 @@ do
             echo -e "\e[1;31mSystem pip detected. Update manually and cautiously\e[m"
             echo -e "\e[1;34mUse: 'pip install --upgrade ${stale_packages[*]}'\e[m"
         else
-            pip install --upgrade "${stale_packages[@]}"
+            pip install --upgrade ${stale_packages[@]}
         fi
     else
         echo -e "\e[1;31mCommand not found: conda\e[m"
