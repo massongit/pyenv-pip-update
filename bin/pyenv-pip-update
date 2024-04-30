@@ -44,6 +44,7 @@ do
             echo -e "\e[1;31mSystem pip detected. Update manually and cautiously\e[m"
             echo -e "\e[1;34mUse: 'pip install --upgrade ${stale_packages[*]}'\e[m"
         else
+            # shellcheck disable=SC2068
             pip install --upgrade ${stale_packages[@]}
         fi
     else
