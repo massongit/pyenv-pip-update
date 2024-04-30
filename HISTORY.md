@@ -1,4 +1,8 @@
 # History
+
+## 0.0.5 (May 1, 2024)
+* Remove quotes around packages to update
+
 ## 0.0.4 (July 21, 2023)
 * Check if any packages are available before calling `pip` install
 * Do not attempt to update system `pip`
