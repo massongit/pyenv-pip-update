@@ -10,14 +10,19 @@ on:
       - master
   workflow_dispatch:
 
+permissions:
+  statuses: write
+
 jobs:
   super-linter:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4.1.4
+        with:
+          fetch-depth: 0
       - name: Super-Linter
-        uses: github/super-linter/slim@v5.0.0
+        uses: super-linter/super-linter/slim@v6.4.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LINTER_RULES_PATH: .

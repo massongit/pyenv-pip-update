@@ -10,46 +10,40 @@
 set -e
 
 # If pyenv run with debug mode, this script run with debug mode too
-if [ -n "${PYENV_DEBUG}" ]
-then
-    set -x
+if [ -n "${PYENV_DEBUG}" ]; then
+	set -x
 fi
 
 # If arguments are given, output the usage
-if [ ${#} -ne 0 ]
-then
-    pyenv help --usage pip-update >&2
-    exit 1
+if [ ${#} -ne 0 ]; then
+	pyenv help --usage pip-update >&2
+	exit 1
 fi
 
 # If no argument is given, update libraries using pip
-for v in "$(pyenv root)"/versions/*
-do
-    v=${v//$(pyenv root)\/versions\//}
-    echo -e "\e[1;32mUpdating library of '${v}'...\e[m"
-    export PYENV_VERSION=${v}
+for v in "$(pyenv root)"/versions/*; do
+	v=${v//$(pyenv root)\/versions\//}
+	echo -e "\e[1;32mUpdating library of '${v}'...\e[m"
+	export PYENV_VERSION=${v}
 
-    if conda >/dev/null 2>&1
-    then
-        conda update --all
-    elif pip >/dev/null 2>&1
-    then
-        mapfile -t stale_packages < <(pip --disable-pip-version-check list --outdated | awk 'NR>2 {printf "%s ", $1}')
-        if [ -z "${stale_packages[*]}" ]
-        then
-            continue
-        fi
+	if conda >/dev/null 2>&1; then
+		conda update --all
+	elif pip >/dev/null 2>&1; then
+		mapfile -t stale_packages < <(pip --disable-pip-version-check list --outdated | awk 'NR>2 {printf "%s ", $1}')
+		if [ -z "${stale_packages[*]}" ]; then
+			continue
+		fi
 
-        if [[ "$v" =~ ^system ]]; then
-            echo -e "\e[1;31mSystem pip detected. Update manually and cautiously\e[m"
-            echo -e "\e[1;34mUse: 'pip install --upgrade ${stale_packages[*]}'\e[m"
-        else
-            # shellcheck disable=SC2068
-            pip install --upgrade ${stale_packages[@]}
-        fi
-    else
-        echo -e "\e[1;31mCommand not found: conda\e[m"
-        echo -e "\e[1;31mCommand not found: pip\e[m"
-        echo -e "\e[1;31mSkip.\e[m"
-    fi
+		if [[ "$v" =~ ^system ]]; then
+			echo -e "\e[1;31mSystem pip detected. Update manually and cautiously\e[m"
+			echo -e "\e[1;34mUse: 'pip install --upgrade ${stale_packages[*]}'\e[m"
+		else
+			# shellcheck disable=SC2068
+			pip install --upgrade ${stale_packages[@]}
+		fi
+	else
+		echo -e "\e[1;31mCommand not found: conda\e[m"
+		echo -e "\e[1;31mCommand not found: pip\e[m"
+		echo -e "\e[1;31mSkip.\e[m"
+	fi
 done
