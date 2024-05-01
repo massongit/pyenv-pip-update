@@ -1,5 +1,8 @@
 # History
 
+## 0.0.6 (May 1, 2024)
+* Apply shfmt
+
 ## 0.0.5 (May 1, 2024)
 * Remove quotes around packages to update
 
