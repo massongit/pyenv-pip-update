@@ -10,6 +10,9 @@ on:
       - master
   workflow_dispatch:
 
+permissions:
+  statuses: write
+
 jobs:
   super-linter:
     runs-on: ubuntu-latest
